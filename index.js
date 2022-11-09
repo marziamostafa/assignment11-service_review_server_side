@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config()
 // const jwt = require('jsonwebtoken')
 
@@ -38,13 +38,14 @@ async function run() {
             res.send(services)
         })
 
-        //to show details
-        // app.get('/allservices/:id', async (req, res) => {
-        //     const id = req.params.id;
-        //     const query = { _id: ObjectId(id) }
-        //     const service = await serviceCollection.findOne(query);
-        //     res.send(service);
-        // })
+        // to show details
+        app.get('/allservices/:id', async (req, res) => {
+            const id = req.params.id;
+            console.log(id)
+            const query = { _id: ObjectId(id) }
+            const service = await serviceCollection.findOne(query);
+            res.send(service);
+        })
     }
     finally {
 
