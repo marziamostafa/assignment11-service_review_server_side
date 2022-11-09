@@ -31,12 +31,12 @@ async function run() {
 
 
         //to show all 6 services
-        // app.get('/allservices', async (req, res) => {
-        //     const query = {};
-        //     const cursor = serviceCollection.find(query);
-        //     const services = await cursor.toArray();
-        //     res.send(services)
-        // })
+        app.get('/allservices', async (req, res) => {
+            const query = {};
+            const cursor = serviceCollection.find(query);
+            const services = await cursor.toArray();
+            res.send(services)
+        })
 
         //to show details
         // app.get('/allservices/:id', async (req, res) => {
