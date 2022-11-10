@@ -4,7 +4,7 @@ const app = express();
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 require('dotenv').config()
-const jwt = require('jsonwebtoken')
+// const jwt = require('jsonwebtoken')
 
 const port = process.env.PORT || 5000;
 
@@ -53,12 +53,22 @@ async function run() {
         })
 
 
+
         //to show all 6 services
         app.get('/allservices', async (req, res) => {
             const query = {};
             const cursor = serviceCollection.find(query);
             const services = await cursor.toArray();
             res.send(services)
+        })
+
+        app.post('/allservices', async (req, res) => {
+            const newInfo = req.body;
+            console.log(newInfo)
+            const result = await serviceCollection.insertOne(newInfo);
+
+            res.send(result);
+
         })
 
         // to show details
@@ -114,13 +124,13 @@ async function run() {
 
         })
 
-        app.patch('/reviews/:id', async (req, res) => {
+        app.put('/reviews/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) }
-            const status = req.body.status;
+            const status = req.body;
             const updatedDoc = {
                 $set: {
-                    status: status
+                    message: message
                 }
             }
             const result = await orderCollection.updateOne(query, updatedDoc);
