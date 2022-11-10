@@ -49,6 +49,24 @@ async function run() {
         })
 
         //adding reviews
+        app.get('/reviews', async (req, res) => {
+
+            const decoded = req.decoded;
+            console.log('inside reviews api', decoded)
+
+
+            let query = {};
+            if (req.query.email) {
+                query = {
+                    email: req.query.email
+                }
+            }
+            const cursor = reviewCollection.find(query);
+            const reviews = await cursor.toArray();
+
+            res.send(reviews)
+        })
+
         app.post('/reviews', async (req, res) => {
             const order = req.body;
             const result = await reviewCollection.insertOne(order);
@@ -56,6 +74,20 @@ async function run() {
             res.send(result);
 
         })
+
+        // app.patch('/reviews/:id', async (req, res) => {
+        //     const id = req.params.id;
+        //     const query = { _id: ObjectId(id) }
+        //     const status = req.body.status;
+        //     const updatedDoc = {
+        //         $set: {
+        //             status: status
+        //         }
+        //     }
+        //     const result = await orderCollection.updateOne(query, updatedDoc);
+
+        //     res.send(result)
+        // })
     }
     finally {
 
